@@ -116,12 +116,7 @@ export default function BlogPage() {
             ))}
           </div>
 
-          {/* Load More Button */}
-          <div className="text-center mt-12">
-            <Button variant="outline" size="lg">
-              Load More Articles
-            </Button>
-          </div>
+
         </div>
       </div>
     </div>

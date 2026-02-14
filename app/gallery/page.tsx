@@ -84,17 +84,17 @@ export default function GalleryPage() {
       </div>
 
       {modalSrc ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
-          <div className="relative max-w-6xl w-full max-h-full">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="relative max-w-5xl w-full max-h-full bg-white rounded-lg shadow-xl overflow-hidden">
             <button
-              className="absolute -top-4 -right-4 bg-white rounded-full p-2 shadow-lg z-50"
+              className="absolute -top-3 -right-3 bg-foreground text-background rounded-full p-2 shadow-lg z-50"
               onClick={() => setModalSrc(null)}
               aria-label="Close"
             >
               ✕
             </button>
 
-            <div className="w-full h-[70vh] flex items-center justify-center">
+            <div className="w-full h-[80vh] flex items-center justify-center bg-white p-6">
               <img src={modalSrc} alt="Full" className="max-w-full max-h-full object-contain" />
             </div>
           </div>

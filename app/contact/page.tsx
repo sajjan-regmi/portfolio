@@ -122,19 +122,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h3 className="font-semibold">Email</h3>
-                      <p className="text-muted-foreground">sajjan.regmi@forestry.gov.np</p>
-                      <p className="text-muted-foreground">s.regmi.research@gmail.com</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center">
-                      <Phone className="h-6 w-6 text-secondary" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold">Phone</h3>
-                      <p className="text-muted-foreground">+977-1-4567890 (Office)</p>
-                      <p className="text-muted-foreground">+977-98-12345678 (Mobile)</p>
+                      <p className="text-muted-foreground">regmisajjan11@gmail.com</p>
                     </div>
                   </div>
 
@@ -145,48 +133,38 @@ export default function ContactPage() {
                     <div>
                       <h3 className="font-semibold">Office Address</h3>
                       <p className="text-muted-foreground">
-                        Department of Forest Research and Survey
+                        Southasia Institute Of Advanced Studies 
                         <br />
                         Babarmahal, Kathmandu, Nepal
                         <br />
-                        P.O. Box: 3339
+
                       </p>
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
-              {/* Professional Links */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-2xl text-primary">Professional Profiles</CardTitle>
+                  <CardTitle className="text-xl text-primary">Office Hours</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <Button variant="outline" asChild className="justify-start bg-transparent">
-                      <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                        <Linkedin className="h-4 w-4 mr-2" />
-                        LinkedIn
-                      </Link>
-                    </Button>
-                    <Button variant="outline" asChild className="justify-start bg-transparent">
-                      <Link href="https://orcid.org" target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="h-4 w-4 mr-2" />
-                        ORCID
-                      </Link>
-                    </Button>
-                    <Button variant="outline" asChild className="justify-start bg-transparent">
-                      <Link href="https://scholar.google.com" target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="h-4 w-4 mr-2" />
-                        Google Scholar
-                      </Link>
-                    </Button>
-                    <Button variant="outline" asChild className="justify-start bg-transparent">
-                      <Link href="https://researchgate.net" target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="h-4 w-4 mr-2" />
-                        ResearchGate
-                      </Link>
-                    </Button>
+                <CardContent>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span>Monday - Friday:</span>
+                      <span className="text-muted-foreground">9:00 AM - 5:00 PM</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Saturday:</span>
+                      <span className="text-muted-foreground">10:00 AM - 2:00 PM</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Sunday:</span>
+                      <span className="text-muted-foreground">Closed</span>
+                    </div>
+                    <div className="mt-4 p-3 bg-primary/5 rounded-lg">
+
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -328,66 +306,7 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Office Hours & Additional Info */}
-          <div className="mt-16 max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-8">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-xl text-primary">Office Hours</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span>Monday - Friday:</span>
-                      <span className="text-muted-foreground">9:00 AM - 5:00 PM</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Saturday:</span>
-                      <span className="text-muted-foreground">10:00 AM - 2:00 PM</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Sunday:</span>
-                      <span className="text-muted-foreground">Closed</span>
-                    </div>
-                    <div className="mt-4 p-3 bg-primary/5 rounded-lg">
-                      <p className="text-xs text-muted-foreground">
-                        Note: During field research periods, office hours may vary. Please call ahead to confirm
-                        availability.
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-xl text-primary">Languages</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span>Nepali</span>
-                      <span className="text-sm text-muted-foreground">Native</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span>English</span>
-                      <span className="text-sm text-muted-foreground">Fluent</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span>Hindi</span>
-                      <span className="text-sm text-muted-foreground">Conversational</span>
-                    </div>
-                    <div className="mt-4 p-3 bg-secondary/5 rounded-lg">
-                      <p className="text-xs text-muted-foreground">
-                        Available for interviews and consultations in multiple languages to accommodate diverse
-                        stakeholders.
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
         </div>
       </div>
     </div>
