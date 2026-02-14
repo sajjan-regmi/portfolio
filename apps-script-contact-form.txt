@@ -1,0 +1,260 @@
+================================================================================
+GOOGLE APPS SCRIPT - CONTACT FORM TO GOOGLE SHEETS
+================================================================================
+
+HOW TO SETUP:
+1. Go to https://script.google.com
+2. Create a new project
+3. Copy the code below into the editor
+4. Replace SHEET_ID with your Google Sheet ID
+5. Deploy as Web App:
+   - Click "Deploy" > "New Deployment"
+   - Select "Web app" as type
+   - Execute as: Your email
+   - Who has access: Anyone
+6. Copy the deployment URL and use in your contact form
+
+================================================================================
+GOOGLE APPS SCRIPT CODE:
+================================================================================
+
+// Configuration
+const SHEET_ID = "YOUR_GOOGLE_SHEET_ID_HERE"; // Replace with your sheet ID
+const SHEET_NAME = "Contact Forms"; // Name of the sheet tab
+
+function doPost(e) {
+  try {
+    // Parse form data (URLSearchParams format - no CORS preflight)
+    const fullName = e.parameter.fullName || "";
+    const email = e.parameter.email || "";
+    const collaborationType = e.parameter.collaborationType || "";
+    const subject = e.parameter.subject || "";
+    const message = e.parameter.message || "";
+
+    // Validate required fields
+    if (!fullName || !email || !subject || !message) {
+      return ContentService.createTextOutput(JSON.stringify({ ok: false, error: "Missing required fields" }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    // Get the spreadsheet and sheet
+    const spreadsheet = SpreadsheetApp.openById(SHEET_ID);
+    const sheet = spreadsheet.getSheetByName(SHEET_NAME);
+
+    // If sheet doesn't exist, create it with headers
+    if (!sheet) {
+      const newSheet = spreadsheet.insertSheet(SHEET_NAME);
+      newSheet.appendRow([
+        "Timestamp",
+        "Full Name",
+        "Email",
+        "Collaboration Type",
+        "Subject",
+        "Message"
+      ]);
+      return doPost(e); // Retry after creating sheet
+    }
+
+    // Get current timestamp
+    const timestamp = new Date().toLocaleString('en-US', {
+      timeZone: 'America/New_York'
+    });
+
+    // Add new row to sheet with form data
+    sheet.appendRow([
+      timestamp,
+      fullName,
+      email,
+      collaborationType,
+      subject,
+      message
+    ]);
+
+    // Return success response
+    return ContentService.createTextOutput(JSON.stringify({ ok: true }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (error) {
+    // Log error for debugging
+    Logger.log("Error: " + error.toString());
+
+    // Return error response
+    return ContentService.createTextOutput(JSON.stringify({ ok: false, error: error.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+================================================================================
+HOW TO FIND YOUR GOOGLE SHEET ID:
+================================================================================
+
+1. Open your Google Sheet in browser
+2. Look at the URL: https://docs.google.com/spreadsheets/d/XXXXXXXXXXXXX/edit#...
+3. Copy the long ID (XXXXXXXXXXXXX) - that's your SHEET_ID
+4. Paste it into the script where it says "YOUR_GOOGLE_SHEET_ID_HERE"
+
+Example URL: https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMjD_7yUy5UbaUIUMtQkFmh9qWFqQqw/edit
+Sheet ID: 1BxiMVs0XRA5nFMjD_7yUy5UbaUIUMtQkFmh9qWFqQqw
+
+================================================================================
+WHAT THE SCRIPT DOES:
+================================================================================
+
+1. Receives POST request from your React form with JSON data:
+   {
+     "fullName": "John Doe",
+     "email": "john@example.com",
+     "collaborationType": "Research Partnership",
+     "subject": "Collaboration Inquiry",
+     "message": "Your message here..."
+   }
+
+2. Validates that required fields are present
+
+3. Opens your Google Sheet by ID
+
+4. Creates the sheet tab if it doesn't exist with headers:
+   - Timestamp
+   - Full Name
+   - Email
+   - Collaboration Type
+   - Subject
+   - Message
+
+5. Adds a new row with all the form data
+
+6. Returns { ok: true } on success
+   or { ok: false, error: "message" } on error
+
+================================================================================
+DEPLOYMENT STEPS (DETAILED):
+================================================================================
+
+Step 1: Go to script.google.com
+Step 2: Create a new project
+Step 3: Click "Untitled project" and name it "Contact Form Script"
+Step 4: Delete the default code and paste the script above
+Step 5: Replace "YOUR_GOOGLE_SHEET_ID_HERE" with your actual Sheet ID
+Step 6: Click Save
+Step 7: Click "Deploy" button (top right)
+Step 8: Select "New deployment"
+Step 9: Select "Web app" from the dropdown
+Step 10: Configure:
+   - Execute as: Your Gmail account
+   - Who has access: Anyone
+Step 11: Click "Deploy"
+Step 12: Copy the "Deployment URL" (looks like: https://script.google.com/macros/s/AKfycb.../exec)
+Step 13: Use this URL in your React contact form
+
+================================================================================
+TESTING THE SCRIPT:
+================================================================================
+
+Use curl or Postman to test:
+
+curl -X POST "YOUR_DEPLOYMENT_URL" \
+  -H "Content-Type: application/json" \
+  -d '{"fullName":"Test User","email":"test@example.com","collaborationType":"Research","subject":"Test","message":"This is a test"}'
+
+Expected Response:
+{ "ok": true }
+
+================================================================================
+OPTIONAL: GOOGLE SHEET FORMATTING
+================================================================================
+
+To format your Google Sheet after setup:
+
+1. Freeze the header row:
+   - Click Format > Freeze > 1 row
+
+2. Make headers bold:
+   - Select row 1
+   - Press Ctrl+B (Cmd+B on Mac)
+
+3. Auto-resize columns:
+   - Select all columns
+   - Click Format > Column > Optimal width
+
+4. Add email validation:
+   - Select column B (Email)
+   - Click Data > Data validation
+   - Select "Email address"
+
+5. Add conditional formatting:
+   - Highlight rows by collaboration type
+   - Select all data
+   - Click Format > Conditional formatting
+
+================================================================================
+TROUBLESHOOTING:
+================================================================================
+
+ERROR: "⚠️ Something went wrong"
+- Check that SHEET_ID is correct
+- Verify Google Sheet exists
+- Check Apps Script deployment URL is correct
+- Ensure deployment has "Anyone" access
+
+ERROR: "❌ Error sending message"
+- Verify all required fields filled (fullName, email, subject, message)
+- Check browser console for detailed error
+- Make sure deployment is still active
+
+DATA NOT APPEARING IN SHEET:
+- Verify sheet name matches "Contact Forms" (or change in script)
+- Check that you have view permissions on the sheet
+- Try creating a new deployment
+
+NO RESPONSE FROM ENDPOINT:
+- Deployment may have expired
+- Try redeploying with new version
+- Check that execution is set to your account
+- Verify "Anyone" has access
+
+================================================================================
+SECURITY NOTES:
+================================================================================
+
+1. This script accepts submissions from anyone
+   - Consider adding honeypot field or rate limiting if needed
+
+2. All data is stored in your Google Sheet
+   - Ensure only you have access to the sheet
+
+3. Email addresses are stored as plain text
+   - Consider data protection regulations in your region
+
+4. Consider adding spam detection:
+   - Check email against known spam domains
+   - Limit message length
+   - Add CAPTCHA to form
+
+================================================================================
+EXAMPLE GOOGLE SHEET OUTPUT:
+================================================================================
+
+Timestamp               | Full Name  | Email           | Collaboration Type    | Subject            | Message
+2024-02-14, 3:45:20 PM | John Doe   | john@email.com  | Research Partnership  | Collaboration      | I'm interested in...
+2024-02-14, 4:12:05 PM | Jane Smith | jane@email.com  | Policy Consultation   | Forestry Policy    | We would like to...
+
+================================================================================
+FOR MULTIPLE FORMS ON DIFFERENT PAGES:
+================================================================================
+
+You can modify the script to use different sheet tabs:
+
+Change this line:
+  const SHEET_NAME = "Contact Forms";
+
+To handle different form types:
+  const SHEET_NAME = data.formType || "Contact Forms";
+
+Then send formType in your JSON:
+  {
+    "formType": "Contact Forms",
+    "fullName": "...",
+    ...
+  }
+
+================================================================================
